@@ -6,7 +6,7 @@
 df['length'] = df['message'].apply(len)
 df.length.describe()
 
-#To visualize and to know more about the distribution of df.length
+#To visualize and to learn more about the distribution of df.length
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -16,11 +16,8 @@ df['length'].plot(bins=50, kind='hist')
 
 # To Delete/remove punctuation from text
 
-import string
-# Example
-import string
-
-mess = 'Hello. Sample message! Does this text has punctuation? Answer: no \ yes'
+import string #Learn more about string module -> https://docs.python.org/2/library/string.html 
+mess = 'Hello. Sample message! Does this text has punctuation? Answer: no \ yes' #Example
 
 # Check characters to see if they are in punctuation
 nopunct = [char for char in mess if char not in string.punctuation]
@@ -32,22 +29,24 @@ print (nopunc)
 # Join the characters again to form the string.
 nopunct = ''.join(nopunc)
 print (nopunc)
-#Hello Sample message Does this text has punctuation Answer no  yes
+#Output: Hello Sample message Does this text has punctuation Answer no  yes
 
 
 
-# Remove Stopwords.
+# Removing stop words with NLTK in Python.
 #We can import a list of english stopwords from NLTK
+#Stop Words: A stop word is a commonly used word (such as “the”, “a”, “an”, “in”)that a search engine
+#has been programmed to ignore, both when indexing entries for searching and when retrieving them as the result of a search query.
 from nltk.corpus import stopwords
 # Show the ten first stop words
 stopwords.words('english')[0:10]
-#['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', 'your']
+#Output: ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', 'your']
 
 # Application
 # Now just remove any stopwords
 clean_message = [word for word in nopunc.split() if word.lower() not in stopwords.words('english')]
 clean_message
-#['Hello', 'Sample', 'message', 'text', 'punctuation', 'Answer', 'yes']
+#Output: ['Hello', 'Sample', 'message', 'text', 'punctuation', 'Answer', 'yes']
 
 #LET's Create a function to apply all the process above
 def text_process(message):
@@ -70,13 +69,13 @@ df['clean_mess"]=df['message'].apply(text_process)
 #We can imagine a 2-Dimensional matrix where the 1-dimension is the entire vocabulary(1 row per word) 
 #and the other dimension are the messages, in this case a column per text message.
 
-For example:
+#For example:
 
-            Message1	Message2	...	MessageN
-Word1Count	    0	        1	    ...	  0
-Word2Count	    0	        0	    ...  	0
-    ...	        1	        2	    ...	  0
-WordNCount     	0	        1	    ...	  1
+#               Message1	Message2	...	 MessageN
+#Word1Count	        0	        1	    ...	  0
+#Word2Count	        0	        0	    ...   0
+#    ...	        1	        2	    ...	  0
+#WordNCount     	0	        1	    ...	  1
 
 #Since there are so many messages, we can expect a lot of zero counts for the 
 #presence of that word in a text.
